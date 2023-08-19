@@ -126,6 +126,7 @@ app.use("/welcome", auth, (req, res) => {
 });
 
 app.use("/api/users", auth, require("./routes/users"));
+app.use("/api/movies", require("./routes/movies"));
 
 (async () => {
   await connectDB();

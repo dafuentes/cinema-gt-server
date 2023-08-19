@@ -12,13 +12,23 @@ const db = {};
 const cDatabase = process.env.DB_NAME || "cinema_gt";
 const cUsername = process.env.DB_USER || "root";
 const cPassword = process.env.DB_PASS || null;
-let sequelize = new Sequelize(cDatabase, cUsername, cPassword, {
-  host: "127.0.0.1",
-  dialect: "mysql",
-  dialectOptions: {
-    socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
-  },
-});
+
+let sequelize;
+console.log(env);
+if (env == "development") {
+  sequelize = new Sequelize(cDatabase, cUsername, cPassword, {
+    host: "127.0.0.1",
+    dialect: "mysql",
+  });
+} else {
+  sequelize = new Sequelize(cDatabase, cUsername, cPassword, {
+    host: "127.0.0.1",
+    dialect: "mysql",
+    dialectOptions: {
+      socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
+    },
+  });
+}
 
 /* let sequelize;
 if (config.use_env_variable) {
