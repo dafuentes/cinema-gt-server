@@ -92,7 +92,7 @@ app.post("/login", async (req, res) => {
       res.status(400).send("All input is required");
     }
     // Validate if user exist in our database
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ where: { email } });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const TOKEN_KEY = process.env.TOKEN_KEY || "devdf2023";
@@ -106,17 +106,17 @@ app.post("/login", async (req, res) => {
       await user.save();
 
       // user
-      res.status(200).json({
+      return res.status(200).json({
         name: user.firstName,
         lastName: user.lastName,
         email: user.email,
         token: user.token,
       });
     }
-    res.status(400).send("Invalid Credentials");
+    return res.status(400).send("Invalid Credentials");
   } catch (err) {
     console.log(err);
-    res.status(400).json({ status: "error", message: err });
+    return res.status(400).json({ status: "error", message: err });
   }
   // Our register logic ends here
 });
@@ -127,6 +127,7 @@ app.use("/welcome", auth, (req, res) => {
 
 app.use("/api/users", auth, require("./routes/users"));
 app.use("/api/movies", require("./routes/movies"));
+app.use("/api/ventas", require("./routes/ventas"));
 
 (async () => {
   await connectDB();

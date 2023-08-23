@@ -4,16 +4,18 @@ const bcrypt = require("bcryptjs");
 
 const { User } = require("../models");
 
-router.get("/", (req, res) =>
-  User.findAll({
-    attributes: ["id", "firstName", "lastName", "email"],
-  })
-    .then((users) => {
-      console.log("Users", users);
-      res.json(users);
-    })
-    .catch((err) => console.log(err))
-);
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: ["id", "firstName", "lastName", "email"],
+    });
+
+    return res.json(users);
+  } catch (e) {
+    console.log(e);
+    return res.json([]);
+  }
+});
 
 router.get("/add", (req, res) => {
   const data = {

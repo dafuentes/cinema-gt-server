@@ -19,6 +19,7 @@ if (env == "development") {
   sequelize = new Sequelize(cDatabase, cUsername, cPassword, {
     host: "127.0.0.1",
     dialect: "mysql",
+    timezone: "-06:00",
   });
 } else {
   sequelize = new Sequelize(cDatabase, cUsername, cPassword, {
@@ -27,6 +28,7 @@ if (env == "development") {
     dialectOptions: {
       socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
     },
+    timezone: "-06:00",
   });
 }
 

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       //this.hasMany(models.Sala, { sourceKey: "idSala", foreignKey: "id" });
       this.belongsTo(models.Sala, { foreignKey: "idSala" });
       this.belongsTo(models.Pelicula, { foreignKey: "idPelicula" });
+      this.hasMany(models.Venta);
     }
   }
   Horario.init(
@@ -20,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       idSala: DataTypes.INTEGER,
       startTime: DataTypes.TIME,
       endTime: DataTypes.TIME,
+      price: DataTypes.DOUBLE,
       active: DataTypes.BOOLEAN,
     },
     {

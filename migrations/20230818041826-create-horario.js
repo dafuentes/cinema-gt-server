@@ -31,6 +31,10 @@ module.exports = {
       endTime: {
         type: Sequelize.TIME,
       },
+      price: {
+        type: Sequelize.DOUBLE,
+        defaultValue: 0,
+      },
       active: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
